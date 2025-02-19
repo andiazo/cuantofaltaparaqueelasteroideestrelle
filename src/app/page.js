@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { format, differenceInYears, intervalToDuration, parse } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 import html2canvas from 'html2canvas';
+import { Suspense } from 'react'
 
 const NASA_INFO = {
   url: 'https://ciencia.nasa.gov/sistema-solar/asteroide-2024-yr4/',
@@ -12,7 +13,7 @@ const NASA_INFO = {
   moreInfo: 'https://cneos.jpl.nasa.gov/pd/cs/pdc24/'
 };
 
-export default function Home() {
+function Home() {
   const searchParams = useSearchParams();
   const [birthDate, setBirthDate] = useState('');
   const impactDate = new Date('2032-12-22');
@@ -141,28 +142,32 @@ export default function Home() {
             </div>
 
             {timeUntilImpact && (
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 w-full max-w-3xl bg-black/60 p-4 md:p-6 rounded-xl border border-yellow-500">
-                <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
-                  <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.years}</span>
-                  <span className="text-xs md:text-sm">AÑOS</span>
-                </div>
-                <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
-                  <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.months}</span>
-                  <span className="text-xs md:text-sm">MESES</span>
-                </div>
-                <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
-                  <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.days}</span>
-                  <span className="text-xs md:text-sm">DÍAS</span>
-                </div>
-                <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
-                  <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.hours}</span>
-                  <span className="text-xs md:text-sm">HORAS</span>
-                </div>
-                <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg col-span-2 md:col-span-1">
-                  <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.minutes}</span>
-                  <span className="text-xs md:text-sm">MINUTOS</span>
+              <div>
+                <p>Tiempo para el impacto</p>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 w-full max-w-3xl bg-black/60 p-4 md:p-6 rounded-xl border border-yellow-500">
+                  <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
+                    <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.years}</span>
+                    <span className="text-xs md:text-sm">AÑOS</span>
+                  </div>
+                  <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
+                    <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.months}</span>
+                    <span className="text-xs md:text-sm">MESES</span>
+                  </div>
+                  <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
+                    <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.days}</span>
+                    <span className="text-xs md:text-sm">DÍAS</span>
+                  </div>
+                  <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg">
+                    <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.hours}</span>
+                    <span className="text-xs md:text-sm">HORAS</span>
+                  </div>
+                  <div className="flex flex-col items-center p-2 md:p-4 bg-blue-900/50 rounded-lg col-span-2 md:col-span-1">
+                    <span className="text-2xl md:text-4xl font-mono text-yellow-300">{timeUntilImpact.minutes}</span>
+                    <span className="text-xs md:text-sm">MINUTOS</span>
+                  </div>
                 </div>
               </div>
+
             )}
 
             <div className="text-center space-y-4 w-full">
@@ -248,7 +253,7 @@ export default function Home() {
                 </a>
 
                 <a href="https://www.buymeacoffee.com/andiazo" target='_blank' className='px-2 py-2 bg-blue-900 hover:bg-blue-800  font-bold rounded-lg text-center'>
-                  😃Buy me a coffee
+                  😃 ¿Me compras un café?
                 </a>
               </div>
             </div>
@@ -262,4 +267,13 @@ export default function Home() {
       )}
     </main>
   );
+}
+
+
+export default function HomePage() {
+  return (
+    <Suspense>
+      <Home />
+    </Suspense>
+  )
 }
